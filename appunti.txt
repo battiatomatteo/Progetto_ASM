@@ -6,7 +6,7 @@ Ogni prodotto è caratterizzato da quattro valori interi:
 essere completato.
 4)  Priorità : 3 bit --> un valore da 1 a 5 per indicar ela priorità: 1 priorità min e 5 priorità max (Il valore di 
 priorità indica anche la penalità che l’azienda dovrà pagare per ogni unità di tempo necessaria a 
-completare il prodotto oltre la scadenza.  (N.Fine produzione- N.Scadenza)*N.Priorità   ).
+completare il prodotto oltre la scadenza.  (    N.Fine produzione- N.Scadenza)*N.Priorità   ).
 
 Creare due tipi di algoritmi:
 1)  Per scadenza EDF
