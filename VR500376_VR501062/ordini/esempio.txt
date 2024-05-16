@@ -1,0 +1,5 @@
+Identificativo: 4; Durata: 10; Scadenza: 12; Priorità: 4; 
+Identificativo: 12; Durata: 17; Scadenza: 32; Priorità: 5; 
+
+4,10,12,4 
+12,7,32,1
