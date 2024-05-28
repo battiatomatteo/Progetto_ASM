@@ -30,7 +30,7 @@ i file utilizzati dovranno risultare chiusi al termine del programma.
 
 Bonus (facoltativo)-->
 
-4 casi principali:
+4 casi principali: 
 • Un file chiamato EDF.txt abbia penalità uguale a zero con EDF e maggiore di zero con HPF; 
 • Un file chiamato HPF.txt abbia penalità uguale a zero con HPF e maggiore di zero con EDF; 
 • Un file chiamato Both.txt abbia penalità uguale a zero con entrambi gli algoritmi; 
