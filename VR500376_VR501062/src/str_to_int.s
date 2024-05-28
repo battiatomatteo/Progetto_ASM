@@ -1,5 +1,12 @@
 .section .data
 # file conversione stringa -> intero
+
+.section .text
+
+  .global scanf
+
+.type scanf, @function
+
 scanf:
     movl $3, %eax
     movl $1, %ebx
