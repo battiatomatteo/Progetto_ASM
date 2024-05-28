@@ -66,10 +66,10 @@ fine_atoi: # chiusura conversione
     je exit
     # chiamata file edf
     cmp $1, %eax
-    je edf
+    call edf
     # chiamata file hpf
     cmp $2, %eax
-    je hpf
+    call hpf
 
     jmp _start
 
