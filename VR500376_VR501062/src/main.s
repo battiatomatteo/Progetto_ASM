@@ -62,13 +62,17 @@ fine_atoi: # chiusura conversione
     
 
     # controllo numero inserito 
-    
+    cmp $0, %eax
+    je exit
     # chiamata file edf
-
+    cmp $1, %eax
+    je edf
     # chiamata file hpf
+    cmp $2, %eax
+    je hpf
 
     jmp _start
-    
+
 exit: # exit
     movl $1, %eax         # Set system call EXIT
 	xorl %ebx, %ebx       # | <- no error (0)
