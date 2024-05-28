@@ -28,7 +28,7 @@ _start:
     int $0x80
 
     # converto l'input in intero
-    movl %eax, [num]
+    movl %eax, [num]    # da controllare !!
     subl %eax, '0'
     
     # 
