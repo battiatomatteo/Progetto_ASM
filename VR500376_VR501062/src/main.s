@@ -30,8 +30,12 @@ _start:
     # converto l'input in intero
     movl %eax, [num]    # da controllare !!
     subl %eax, '0'
+
+    # controllo numero inserito 
     
-    # 
+    # chiamata file edf
+
+    # chiamata file hpf
 
     
 exit: # exit
