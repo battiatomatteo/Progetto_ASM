@@ -8,8 +8,8 @@ titolo_len:
 	.long . - titolo		# lunghezza del titolo
 
 testo:
-	.ascii "Si prega di scegliere tra :\n0)EXIT\n1)EDF\n2)HPF\n\n"
-
+	.ascii "Scegli tra \n 0 Esce \n 1 EDF \n 2 HPF"
+ 
 testo_len:
 	.long . - testo     # lunghezza della stringa testo
 
@@ -27,9 +27,11 @@ _start:
     # controllo numero inserito 
     cmp $0, %eax
     je exit
+
     # chiamata file edf
     cmp $1, %eax
     call edf
+    
     # chiamata file hpf
     cmp $2, %eax
     call hpf
