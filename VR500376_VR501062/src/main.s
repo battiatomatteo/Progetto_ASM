@@ -21,7 +21,8 @@ section.text
 
 _start:
     # leggo l'intero (scanf)
-    call scanf # salvo in eax 
+    call scanf            # salvo in eax 
+    je stampa
 
     # controllo numero inserito 
     cmp $0, %eax
@@ -39,3 +40,14 @@ exit: # exit
     movl $1, %eax         # Set system call EXIT
 	xorl %ebx, %ebx       # | <- no error (0)
 	int $0x80             # Execute syscall
+
+stampa:  # stampo a video
+
+    movb $10, (%ebx,%edx,1)    # aggiunge il carattere '\n' in fondo a 'numstr'
+
+    inc %ebx
+    movl %ebx, %edx            # carica in EDX la lunghezza della stringa 'numstr'
+    movl $4, %eax              # carica in EAX il codice della syscall WRITE
+    movl $1, %ebx              # carica in EBX il codice dello standard output
+    leal numstr, %ecx          # carica in ECX l'indirizzo della stringa 'numstr'
+    int $0x80                  # esegue la syscall
