@@ -7,8 +7,8 @@
 
 .type scanf, @function
 
-section.bss
-    num resd 1 # per allocare un carattere 
+# section.bss
+    # num resd 1 # per allocare un carattere 
 
 scanf:
     movl $3, %eax
