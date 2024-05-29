@@ -21,7 +21,7 @@ section.text
 
 _start:
     # leggo l'intero (scanf)
-    call scanf # salvo in eax
+    call scanf # salvo in eax 
 
     # controllo numero inserito 
     cmp $0, %eax
