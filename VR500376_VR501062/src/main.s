@@ -13,8 +13,6 @@ testo:
 testo_len:
 	.long . - testo     # lunghezza della stringa testo
 
-section.bss
-    num resd 1 # per allocare un carattere 
 
 section.text
     global _start
