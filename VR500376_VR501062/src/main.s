@@ -14,8 +14,8 @@ testo_len:
 	.long . - testo     # lunghezza della stringa testo
 
 
-section.text
-    global _start
+.section .text
+    .global _start
 
 _start:
     # leggo l'intero (scanf)
