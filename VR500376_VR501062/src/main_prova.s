@@ -13,6 +13,30 @@ testo:
 testo_len:
 	.long . - testo     # lunghezza della stringa testo
 
+	
+
+
+hpf:
+	.ascii "scelto hpf\n"
+ 
+hpf_len:
+	.long . - testo     # lunghezza della stringa testo
+
+edf:
+	.ascii "scelto edf\n"
+ 
+edf_len:
+	.long . - testo     # lunghezza della stringa testo
+
+exit_:
+	.ascii "uscita programma\n"
+ 
+exit_len:
+	.long . - testo     # lunghezza della stringa testo
+
+
+	
+
 scelta:
 	.long 0
 
@@ -48,19 +72,49 @@ _start:
 
     # controllo numero inserito 
     cmp $0, %eax
-    # je exit
+    je fine
 
     # chiamata file edf
     cmp $1, %eax
     # call edf
+	je _edf
     
     # chiamata file hpf
     cmp $2, %eax
     # call hpf
+	je _hpf
+
+
+
+
+
+
+_hpf:
+    movl $4, %eax
+	movl $1, %ebx
+    leal hpf, %ecx
+    movl hpf_len, %edx
+	jmp exit
+
+
+_edf:
+	movl $4, %eax
+	movl $1, %ebx
+    leal edf, %ecx
+    movl edf_len, %edx
+	int $0x80
+	jmp exit
+
+fine:
+    movl $4, %eax
+	movl $1, %ebx
+    leal exit_, %ecx
+    movl exit_len, %edx
+	int $0x80
+    jmp exit
 
 
 exit: # exit
     movl $1, %eax         # Set system call EXIT
 	xorl %ebx, %ebx       # | <- no error (0)
 	int $0x80             # Execute syscall
-	
