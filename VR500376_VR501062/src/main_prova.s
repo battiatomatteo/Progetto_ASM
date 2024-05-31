@@ -32,7 +32,7 @@ exit_:
 	.ascii "uscita programma\n"
  
 exit_len:
-	.long . - exit     # lunghezza della stringa testo
+	.long . - exit_     # lunghezza della stringa testo
 
 
 	
