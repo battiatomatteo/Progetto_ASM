@@ -20,19 +20,19 @@ hpf:
 	.ascii "scelto hpf\n"
  
 hpf_len:
-	.long . - testo     # lunghezza della stringa testo
+	.long . - hpf     # lunghezza della stringa testo
 
 edf:
 	.ascii "scelto edf\n"
  
 edf_len:
-	.long . - testo     # lunghezza della stringa testo
+	.long . - edf     # lunghezza della stringa testo
 
 exit_:
 	.ascii "uscita programma\n"
  
 exit_len:
-	.long . - testo     # lunghezza della stringa testo
+	.long . - exit     # lunghezza della stringa testo
 
 
 	
