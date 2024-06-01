@@ -71,7 +71,7 @@ _start:
 
 	
 	
-	call itoa
+	#call itoa
 	 
 
     # controllo numero inserito 
