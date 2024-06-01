@@ -63,12 +63,15 @@ _start:
 	int $0x80
     
     #stampo a video scelta 
-	movl $4, %eax
-	movl $1, %ebx
-    leal scelta, %ecx
-    movl ln_scelta, %edx
-	int $0x80
+	#movl $4, %eax
+	#movl $1, %ebx
+    #leal scelta, %ecx
+    #movl ln_scelta, %edx
+	#int $0x80
 
+	
+	
+	jmp atoi_num
 
     # controllo numero inserito 
     cmp $0, %eax
@@ -87,13 +90,12 @@ _start:
 
 
 
-
-
 _hpf:
     movl $4, %eax
 	movl $1, %ebx
     leal hpf, %ecx
     movl hpf_len, %edx
+	int $0x80
 	jmp exit
 
 
