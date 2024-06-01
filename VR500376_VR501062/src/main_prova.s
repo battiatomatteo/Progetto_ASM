@@ -71,7 +71,7 @@ _start:
 
 	
 	
-	jmp atoi_num
+	jmp itoa
 
     # controllo numero inserito 
     cmp $0, %eax
