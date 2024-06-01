@@ -71,7 +71,8 @@ _start:
 
 	
 	
-	jmp itoa
+	call itoa
+	 
 
     # controllo numero inserito 
     cmp $0, %eax
