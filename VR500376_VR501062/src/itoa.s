@@ -25,9 +25,5 @@ ripeti:
     jmp ripeti               # Torna all'inizio del ciclo
 
 fine_itoa:
-    movl $4, %eax
-	movl $1, %ebx
-    leal numstr, %ecx
-    #movl testo_len, %edx
-	int $0x80
+    #fino a qui arriva
     ret
