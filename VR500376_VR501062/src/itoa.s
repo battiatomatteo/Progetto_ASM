@@ -3,7 +3,7 @@
 .section .text
     .global itoa
 
-#type itoa, @function  # Dichiaro la funzione itoa per la conversione str2int
+.type itoa, @function  # Dichiaro la funzione itoa per la conversione str2int
 
 numstr:
     .ascii "2203\n"
