@@ -88,7 +88,7 @@ _start:
     # call hpf
 	je _hpf
 
-
+	#non entra nei je
 
 
 _hpf:
