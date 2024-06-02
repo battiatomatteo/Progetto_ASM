@@ -48,12 +48,15 @@ ln_scelta:
 
 
 _start:
+
     #stampo a video testo 
 	movl $4, %eax
 	movl $1, %ebx
     leal testo, %ecx
     movl testo_len, %edx
 	int $0x80
+
+	#movl $42, %eax  # Inizializza eax con il valore intero 42
 
     # scanf -> lettura numero da tastiera 
 	movl $3, %eax
