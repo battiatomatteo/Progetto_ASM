@@ -64,7 +64,7 @@ _start:
     leal scelta, %ecx
     movl ln_scelta, %edx
 	int $0x80
-    
+    movl scelta, %eax
     #stampo a video scelta 
 	#movl $4, %eax
 	#movl $1, %ebx
@@ -74,7 +74,7 @@ _start:
 
 	
 	
-	call itoa
+	call itoa 
 	 
 
     # controllo numero inserito 

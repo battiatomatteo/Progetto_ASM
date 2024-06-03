@@ -31,10 +31,16 @@ fine_itoa:
     #fino a qui arriva
 
     # Stampa il valore di eax
-    movl %eax, %esi
+    movl %esi, %eax
     movl $4, %eax
     movl $1, %ebx
     movl $1, %edx
     int $0x80
+
+    movl $4, %eax
+	movl $1, %ebx
+    leal numstr, %ecx
+    movl numstr_ln, %edx
+	int $0x80
 
     ret
