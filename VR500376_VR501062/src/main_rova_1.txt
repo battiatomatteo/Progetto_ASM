@@ -12,14 +12,37 @@ testo:
  
 testo_len:
 	.long . - testo     # lunghezza della stringa testo
+
 	
 
-#scelta:
-#	.ascii "0000\n"
+
+hpf:
+	.ascii "scelto hpf\n"
+ 
+hpf_len:
+	.long . - hpf     # lunghezza della stringa testo
+
+edf:
+	.ascii "scelto edf\n"
+ 
+edf_len:
+	.long . - edf     # lunghezza della stringa testo
+
+exit_:
+	.ascii "uscita programma\n"
+ 
+exit_len:
+	.long . - exit_     # lunghezza della stringa testo
+
+
 	
 
-#ln_scelta:
-#	.long . - scelta     # lunghezza della scelta
+scelta:
+	.ascii "0000\n"
+	
+
+ln_scelta:
+	.long . - scelta     # lunghezza della scelta
 
 .section .text
     .global _start
@@ -37,13 +60,14 @@ _start:
 	#movl $42, %eax  # Inizializza eax con il valore intero 42
 
     # scanf -> lettura numero da tastiera 
-	#movl $3, %eax
-	#movl $1, %ebx
-    #leal scelta, %ecx
-    #movl ln_scelta, %edx
-	#int $0x80
+	movl $3, %eax
+	movl $1, %ebx
+    leal scelta, %ecx
+    movl ln_scelta, %edx
 	
-    #movl scelta, %esi
+	int $0x80
+	
+    movl scelta, %esi
 
     #stampo a video scelta 
 	#movl $4, %eax
@@ -59,24 +83,48 @@ _start:
 
     # controllo numero inserito 
     cmp $0, %eax
-    je exit
+    je fine
 
     # chiamata file edf
-    #cmp $1, %eax
-    #call edf
-	#je _edf
+    cmp $1, %eax
+    # call edf
+	je _edf
     
     # chiamata file hpf
-    #cmp $2, %eax
-    #call hpf
-	#je _hpf
+    cmp $2, %eax
+    # call hpf
+	je _hpf
 
 	#non entra nei je
+
+
+_hpf:
+    movl $4, %eax
+	movl $1, %ebx
+    leal hpf, %ecx
+    movl hpf_len, %edx
+	int $0x80
+	jmp exit
+
+
+_edf:
+	movl $4, %eax
+	movl $1, %ebx
+    leal edf, %ecx
+    movl edf_len, %edx
+	int $0x80
+	jmp exit
+
+fine:
+    movl $4, %eax
+	movl $1, %ebx
+    leal exit_, %ecx
+    movl exit_len, %edx
+	int $0x80
+    jmp exit
 
 
 exit: # exit
     movl $1, %eax         # Set system call EXIT
 	xorl %ebx, %ebx       # | <- no error (0)
 	int $0x80             # Execute syscall
-
-

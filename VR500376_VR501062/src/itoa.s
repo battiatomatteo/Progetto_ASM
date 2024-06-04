@@ -6,12 +6,20 @@
 .type itoa, @function  # Dichiaro la funzione itoa per la conversione str2int
 
 numstr:
-    .ascii "2203\n"
+    .ascii "0000\n"
 
 numstr_ln:
     .long . - numstr
 
 itoa:
+    #movl %eax, numstr
+    # scanf -> lettura numero da tastiera 
+	movl $3, %eax
+	movl $1, %ebx
+    leal numstr, %ecx
+    movl numstr_ln, %edx
+	int $0x80
+
     leal numstr, %esi
     movl $0, %ecx          # Azzero il contatore
     movl $0, %ebx          # Azzero il registro EBX
@@ -31,16 +39,12 @@ fine_itoa:
     #fino a qui arriva
 
     # Stampa il valore di eax
-    movl %esi, %eax
-    movl $4, %eax
-    movl $1, %ebx
-    movl $1, %edx
-    int $0x80
-
-    movl $4, %eax
-	movl $1, %ebx
-    leal numstr, %ecx
-    movl numstr_ln, %edx
-	int $0x80
+    #movl %eax, numstr
+    
+    #movl $4, %eax
+	#movl $1, %ebx
+    #leal numstr, %ecx
+    #movl numstr_ln, %edx
+	#int $0x80
 
     ret
