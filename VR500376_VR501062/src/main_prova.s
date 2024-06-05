@@ -54,7 +54,7 @@ _start:
 
 	
 	
-	call itoa 
+	call scanf 
 	 
 
     # controllo numero inserito 
@@ -62,17 +62,17 @@ _start:
     je exit
 
     # chiamata file edf
-    #cmp $1, %eax
-    #call edf
+    cmp $1, %eax
+    je edf
 	#je _edf
     
     # chiamata file hpf
-    #cmp $2, %eax
-    #call hpf
+    cmp $2, %eax
+    je hpf
 	#je _hpf
 
 	#non entra nei je
-
+    jmp exit
 
 exit: # exit
     movl $1, %eax         # Set system call EXIT

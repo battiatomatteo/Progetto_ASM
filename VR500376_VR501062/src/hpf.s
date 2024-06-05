@@ -6,22 +6,22 @@
 
 .type hpf, @function
 
-hpf:
+_hpf:
 	.ascii "scelto hpf\n"
  
 hpf_len:
 	.long . - hpf     # lunghezza della stringa testo
 
-_hpf:
+hpf:
     movl $4, %eax
     movl $1, %ebx
-    leal hpf, %ecx
+    leal _hpf, %ecx
     movl hpf_len, %edx
     int $0x80
     jmp exit
 
 exit: # exit
-    movl $1, %eax         # Set system call EXIT
+  movl $1, %eax         # Set system call EXIT
 	xorl %ebx, %ebx       # | <- no error (0)
 	int $0x80             # Execute syscall
 

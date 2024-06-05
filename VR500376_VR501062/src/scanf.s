@@ -1,17 +1,19 @@
 .section .data
 
-.section .text
-    .global itoa
-
-.type itoa, @function  # Dichiaro la funzione itoa per la conversione str2int
-
 numstr:
     .ascii "0000\n"
 
 numstr_ln:
     .long . - numstr
 
-itoa:
+.section .text
+    .global scanf
+
+.type scanf, @function  # Dichiaro la funzione atoi per la conversione str2int
+
+
+scanf:
+
     #movl %eax, numstr
     # scanf -> lettura numero da tastiera 
 	movl $3, %eax
@@ -20,10 +22,14 @@ itoa:
     movl numstr_ln, %edx
 	int $0x80
 
+atoi:
     leal numstr, %esi
-    movl $0, %ecx          # Azzero il contatore
-    movl $0, %ebx          # Azzero il registro EBX
 
+    xorl %eax,%eax            # Azzero registri General Purpose     
+    xorl %ebx,%ebx                
+    xorl %ecx,%ecx                
+    xorl %edx,%edx
+    
 ripeti:
     movb (%ecx,%esi,1), %bl  # Carica il byte corrente dalla stringa in %bl
     cmp $10, %bl             # Confronta con il valore ASCII di '\n'
@@ -37,14 +43,13 @@ ripeti:
 
 fine_itoa:
     #fino a qui arriva
-
-    # Stampa il valore di eax
-    #movl %eax, numstr
     
     #movl $4, %eax
 	#movl $1, %ebx
     #leal numstr, %ecx
     #movl numstr_ln, %edx
 	#int $0x80
+
+    #movl numstr, %eax
 
     ret

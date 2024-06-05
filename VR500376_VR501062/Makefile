@@ -9,14 +9,14 @@ LD_FLAGS=-m elf_i386
 
 all: bin/pianificatore 
 
-bin/pianificatore : obj/main_prova.o obj/itoa.o obj/hpf.o obj/edf.o
-	ld $(LD_FLAGS) obj/main_prova.o obj/itoa.o obj/hpf.o obj/edf.o -o bin/pianificatore
+bin/pianificatore : obj/main_prova.o obj/scanf.o obj/hpf.o obj/edf.o
+	ld $(LD_FLAGS) obj/main_prova.o obj/scanf.o obj/hpf.o obj/edf.o -o bin/pianificatore
 
 obj/main_prova.o: src/main_prova.s
 	as $(AS_FLAGS) $(DEBUG) src/main_prova.s -o obj/main_prova.o
 
-obj/itoa.o: src/itoa.s
-	as $(AS_FLAGS) $(DEBUG) src/itoa.s -o obj/itoa.o
+obj/scanf.o: src/scanf.s
+	as $(AS_FLAGS) $(DEBUG) src/scanf.s -o obj/scanf.o
 
 obj/hpf.o: src/hpf.s
 	as $(AS_FLAGS) $(DEBUG) src/hpf.s -o obj/hpf.o
