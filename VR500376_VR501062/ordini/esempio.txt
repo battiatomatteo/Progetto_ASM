@@ -6,6 +6,7 @@ Identificativo: 12; Durata: 17; Scadenza: 32; Priorità: 5;
 
 Dunque, nell’esempio precedente, se si utilizzasse l’algoritmo EDF, l’output atteso sarà:
 Pianificazione EDF:
+
 4:0
 12:10
 Conclusione: 17
@@ -13,6 +14,7 @@ Penalty: 0
 
 Mentre, se si fosse usato l’algoritmo HPF:
 Pianificazione HPF:
+
 12:0
 4:17
 Conclusione: 17
