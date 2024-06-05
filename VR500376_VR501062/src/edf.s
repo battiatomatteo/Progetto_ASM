@@ -1,16 +1,16 @@
 # algoritmo edf
 .section .data
 
-.section .text
-  .global edf
-
-.type edf, @function
-
 _edf:
 	.ascii "scelto edf\n"
  
 edf_len:
-	.long . - edf     # lunghezza della stringa testo
+	.long . - _edf     # lunghezza della stringa testo
+
+.section .text
+  .global edf
+
+.type edf, @function
 
 edf:
     movl $4, %eax

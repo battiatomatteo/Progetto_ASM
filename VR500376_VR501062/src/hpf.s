@@ -1,16 +1,16 @@
 # algoritmo hpf
 .section .data
 
-.section .text
-  .global hpf
-
-.type hpf, @function
-
 _hpf:
 	.ascii "scelto hpf\n"
  
 hpf_len:
-	.long . - hpf     # lunghezza della stringa testo
+	.long . - _hpf     # lunghezza della stringa testo
+
+.section .text
+  .global hpf
+
+.type hpf, @function
 
 hpf:
     movl $4, %eax
