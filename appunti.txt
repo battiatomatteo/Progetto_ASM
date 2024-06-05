@@ -4,7 +4,7 @@ Ogni prodotto è caratterizzato da quattro valori interi:
 2)  Durata : 4 bit --> da 1 a max 10. 
 3)  Scadenza : 7 bit --> da uno a 100 , il numero che mi dice il tempo massimo entro cui il prodotto dovrà 
 essere completato.
-4)  Priorità : 3 bit --> un valore da 1 a 5 per indicar ela priorità: 1 priorità min e 5 priorità max (Il valore di 
+4)  Priorità : 3 bit --> un valore da 1 a 5 per indicare la priorità: 1 priorità min e 5 priorità max (Il valore di 
 priorità indica anche la penalità che l’azienda dovrà pagare per ogni unità di tempo necessaria a 
 completare il prodotto oltre la scadenza.  (    N.Fine produzione- N.Scadenza)*N.Priorità   ).
 

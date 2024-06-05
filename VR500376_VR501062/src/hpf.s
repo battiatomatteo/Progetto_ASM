@@ -2,7 +2,7 @@
 .section .data
 
 _hpf:
-	.ascii "scelto hpf\n"
+	.ascii "Pianificazione HPF\n"
  
 hpf_len:
 	.long . - _hpf     # lunghezza della stringa testo

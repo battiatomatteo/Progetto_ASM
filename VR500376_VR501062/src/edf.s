@@ -2,7 +2,7 @@
 .section .data
 
 _edf:
-	.ascii "scelto edf\n"
+	.ascii "Pianificazione EDF\n"
  
 edf_len:
 	.long . - _edf     # lunghezza della stringa testo
