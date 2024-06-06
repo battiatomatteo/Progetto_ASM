@@ -1,0 +1,23 @@
+---------------------------
+--------- COMANDI ---------
+---------------------------
+
+cd     					-> entro nella cartella
+ls     					-> vedo dentro la cartella
+make   					-> fa partire il make file ( )
+./bin/pianificatore  			-> parte il main
+make clean   				-> pulisce la cartella bin
+
+
+
+gdb
+file ./bin/pianificatore             
+set args ./ordini/file_ordini.txt
+breack src/file.s:riga
+run
+info registers
+print (tipo_variabile) nome_variabile
+
+
+COMANDI MAKEFILE 			-> as --32 -gstabs src/main_prova.s -o obj/main_prova.o
+					   ld -m elf_i386 obj/main_prova.o -o bin/pianificatore 

@@ -19,6 +19,11 @@ edf:
     leal _edf, %ecx
     movl edf_len, %edx
     int $0x80
+
+    call readfile
+    
+    # togliere etichetta exit in readfile.s 
+
     jmp exit
 
 exit: # exit
