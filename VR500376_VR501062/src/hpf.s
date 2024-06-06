@@ -1,4 +1,6 @@
-# algoritmo hpf
+# algoritmo hpf : Highest Priority First (HPF): si pianificano per primi i prodotti con priorità più alta, in caso di 
+# parità di priorità, si pianifica il prodotto con la scadenza più vicina.
+
 .section .data
 
 _hpf:
