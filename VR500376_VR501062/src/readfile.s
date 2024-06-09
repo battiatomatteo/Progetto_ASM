@@ -1,12 +1,18 @@
+
 .section .data
+
+#.define VETTORE_DIM 100
+
 filename:
-    .ascii "ordini/test.txt"    # Nome del file di testo da leggere
+    .ascii "./ordini/test.txt"    # Nome del file di testo da leggere
 fd:
     .int 0               # File descriptor
 
 buffer: .string ""       # Spazio per il buffer di input
 newline: .byte 10        # Valore del simbolo di nuova linea
 lines: .int 0            # Numero di linee
+vettore: .byte 100         # Dimensione del vettore (puoi cambiarla)
+
 
 .section .bss
 
@@ -46,19 +52,30 @@ _read_loop:
     jle _close_file     # Se ci sono errori o EOF, chiudo il file
     
     # Controllo se ho una nuova linea
-    movb buffer, %al    # copio il carattere dal buffer ad AL
-    cmpb newline, %al   # confronto AL con il carattere \n
-    jne _print_line     # se sono diversi stampo la linea
-    incw lines          # altrimenti, incremento il contatore
+    movb buffer, %al    # Copio il carattere dal buffer ad AL
+    cmpb newline, %al   # Confronto AL con il carattere \n
+    # jne _print_line     # se sono diversi stampo la linea
+    jne _add_to_vector  # Se sono diversi, aggiungi il carattere al vettore
+    #incw lines          # altrimenti, incremento il contatore
+    incl lines          # Altrimenti, incremento il contatore
 
-_print_line:
+#_print_line:
     # Stampa il contenuto della riga
-    mov $4, %eax        # syscall write
-    mov $1, %ebx        # File descriptor standard output (stdout)
-    mov $buffer, %ecx   # Buffer di output
-    int $0x80           # Interruzione del kernel
+    #mov $4, %eax        # syscall write
+    #mov $1, %ebx        # File descriptor standard output (stdout)
+    #mov $buffer, %ecx   # Buffer di output
+    #int $0x80           # Interruzione del kernel
+
+    #jmp _read_loop      # Torna alla lettura del file
+
+
+_add_to_vector:
+    # Aggiungi il carattere al vettore
+    movb %al, vettore(%ecx)
+    incl %ecx            # Incrementa l'indice del vettore
 
     jmp _read_loop      # Torna alla lettura del file
+
 
 # Chiude il file
 _close_file:
