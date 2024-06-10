@@ -1,8 +1,7 @@
 .section .data
 vettore:
     .byte 5                # Dimensione del vettore (puoi cambiarla)
-    valori:
-        .byte 0:5           # Riserva spazio per i valori del vettore
+    valori: .byte 0:5           # Riserva spazio per i valori del vettore
 
 .section .text
 .global _start
