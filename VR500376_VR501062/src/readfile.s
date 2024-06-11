@@ -56,15 +56,15 @@ _read_loop:
     cmpb newline, %al   # Confronto AL con il carattere \n
     # jne _print_line     # se sono diversi stampo la linea
     jne _add_to_vector  # Se sono diversi, aggiungi il carattere al vettore
-    #incw lines          # altrimenti, incremento il contatore
+    # incw lines          # altrimenti, incremento il contatore
     incl lines          # Altrimenti, incremento il contatore
 
-#_print_line:
+# _print_line:
     # Stampa il contenuto della riga
-    #mov $4, %eax        # syscall write
-    #mov $1, %ebx        # File descriptor standard output (stdout)
-    #mov $buffer, %ecx   # Buffer di output
-    #int $0x80           # Interruzione del kernel
+    # mov $4, %eax        # syscall write
+    # mov $1, %ebx        # File descriptor standard output (stdout)
+    # mov $buffer, %ecx   # Buffer di output
+    # int $0x80           # Interruzione del kernel
 
     #jmp _read_loop      # Torna alla lettura del file
 

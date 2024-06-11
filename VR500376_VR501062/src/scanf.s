@@ -44,12 +44,12 @@ ripeti:
 fine_itoa:
     #fino a qui arriva
     
-    #movl $4, %eax
-	#movl $1, %ebx
-    #leal numstr, %ecx
-    #movl numstr_ln, %edx
-	#int $0x80
+    # movl $4, %eax
+	# movl $1, %ebx
+    # leal numstr, %ecx
+    # movl numstr_ln, %edx
+	# int $0x80
 
-    #movl numstr, %eax
+    # movl numstr, %eax
 
     ret

@@ -37,20 +37,20 @@ _start:
 	#movl $42, %eax  # Inizializza eax con il valore intero 42
 
     # scanf -> lettura numero da tastiera 
-	#movl $3, %eax
-	#movl $1, %ebx
-    #leal scelta, %ecx
-    #movl ln_scelta, %edx
-	#int $0x80
+	# movl $3, %eax
+	# movl $1, %ebx
+    # leal scelta, %ecx
+    # movl ln_scelta, %edx
+	# int $0x80
 	
-    #movl scelta, %esi
+    # movl scelta, %esi
 
-    #stampo a video scelta 
-	#movl $4, %eax
-	#movl $1, %ebx
-    #leal scelta, %ecx
-    #movl ln_scelta, %edx
-	#int $0x80
+    # stampo a video scelta 
+	# movl $4, %eax
+	# movl $1, %ebx
+     # leal scelta, %ecx
+    # movl ln_scelta, %edx
+	# int $0x80
 
 	
 	
@@ -64,14 +64,14 @@ _start:
     # chiamata file edf
     cmp $1, %eax
     je edf
-	#je _edf
+	# je _edf
     
     # chiamata file hpf
     cmp $2, %eax
     je hpf
-	#je _hpf
+	# je _hpf
 
-	#non entra nei je
+	# non entra nei je
     jmp exit
 
 exit: # exit
