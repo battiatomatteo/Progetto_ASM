@@ -7,7 +7,7 @@ AS_FLAGS =--32
 DEBUG=-gstabs
 LD_FLAGS=-m elf_i386
 
-all: bin/pianificatore 
+all: bin/pianificatore
 
 bin/pianificatore : obj/main_prova.o obj/scanf.o obj/hpf.o obj/edf.o obj/readfile.o
 	ld $(LD_FLAGS) obj/main_prova.o obj/scanf.o obj/hpf.o obj/edf.o obj/readfile.o -o bin/pianificatore
