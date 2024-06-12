@@ -27,5 +27,11 @@ problema cod binario :    vari comandi provati
 chmod +x  ./bin/pianificatore
 file  ./bin/pianificatore
 ldd  ./bin/pianificatore
+
+ls -l /lib/ld-linux*.so*
+
+
 sudo apt-get install libc6-i386
-apt-get update or try with --fix-missing
+					 libc6-x32
+
+sudo ldconfig
