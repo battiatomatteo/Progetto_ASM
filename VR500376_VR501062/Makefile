@@ -5,6 +5,7 @@
 
 AS_FLAGS =--32
 DEBUG=-gstabs
+#LD_FLAGS=-m i386pe  
 LD_FLAGS=-m elf_i386
 
 all: bin/pianificatore

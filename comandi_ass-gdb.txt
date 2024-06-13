@@ -22,6 +22,8 @@ print (tipo_variabile) nome_variabile
 COMANDI MAKEFILE 			-> as --32 -gstabs src/main_prova.s -o obj/main_prova.o
 					   ld -m elf_i386 obj/main_prova.o -o bin/pianificatore 
 
+
+
 problema cod binario :    vari comandi provati 
 
 chmod +x  ./bin/pianificatore
