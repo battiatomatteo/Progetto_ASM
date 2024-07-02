@@ -4,7 +4,8 @@
 #.define VETTORE_DIM 100
 
 filename:
-    .ascii "./ordini/test.txt"    # Nome del file di testo da leggere
+    #errore nell'apertura file in un'altra cartella
+    .ascii "test.txt"    # Nome del file di testo da leggere
 fd:
     .int 0               # File descriptor
 
@@ -34,9 +35,9 @@ _open:
     mov $0, %ecx        # Modalità di apertura (O_RDONLY)
     int $0x80           # Interruzione del kernel
 
-    # Se c'è un errore, esce
-    cmp $0, %eax
-    jl _exit
+    
+    cmp $0, %eax        # Se ci sta un errore, esce
+    je _exit
 
     mov %eax, fd      # Salva il file descriptor in ebx
 
