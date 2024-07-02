@@ -50,15 +50,16 @@ _read_loop:
     int $0x80           # Interruzione del kernel
 
     cmp $0, %eax        # Controllo se ci sono errori o EOF
+    # errore ( chiude subito il file )
     jle _close_file     # Se ci sono errori o EOF, chiudo il file
     
     # Controllo se ho una nuova linea
-    movb buffer, %al    # Copio il carattere dal buffer ad AL
-    cmpb newline, %al   # Confronto AL con il carattere \n
+    movb buffer, %al      # Copio il carattere dal buffer ad AL
+    cmpb newline, %al     # Confronto AL con il carattere \n
     # jne _print_line     # se sono diversi stampo la linea
-    jne _add_to_vector  # Se sono diversi, aggiungi il carattere al vettore
+    jne _add_to_vector    # Se sono diversi, aggiungi il carattere al vettore
     # incw lines          # altrimenti, incremento il contatore
-    incl lines          # Altrimenti, incremento il contatore
+    incl lines            # Altrimenti, incremento il contatore
 
 # _print_line:
     # Stampa il contenuto della riga
