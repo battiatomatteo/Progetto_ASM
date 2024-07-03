@@ -17,6 +17,8 @@ breack src/file.s:riga
 run
 info registers
 print (tipo_variabile) nome_variabile
+print (tipo[numero di elementi]) nome_array  --> print (char[6]) vettore
+
 
 
 COMANDI MAKEFILE 			-> as --32 -gstabs src/main_prova.s -o obj/main_prova.o
