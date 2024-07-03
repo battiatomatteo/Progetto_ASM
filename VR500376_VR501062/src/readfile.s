@@ -5,14 +5,16 @@
 
 filename:
     #errore nell'apertura file in un'altra cartella
-    .ascii "test.txt"    # Nome del file di testo da leggere
+    .ascii "./src/test.txt"    # Nome del file di testo da leggere
 fd:
     .int 0               # File descriptor
 
 buffer: .string ""       # Spazio per il buffer di input
 newline: .byte 10        # Valore del simbolo di nuova linea
 lines: .int 0            # Numero di linee
-vettore: .byte 100         # Dimensione del vettore (puoi cambiarla)
+indice: .int 0           # variabile per l'indice vettore
+vettore: .byte 100       # Dimensione del vettore (puoi cambiarla)
+
 
 
 .section .bss
@@ -37,9 +39,9 @@ _open:
 
     
     cmp $0, %eax        # Se ci sta un errore, esce
-    je _exit
+    jle _exit
 
-    mov %eax, fd      # Salva il file descriptor in ebx
+    mov %eax, fd      # Salva il file descriptor in eax
 
 # Legge il file riga per riga
 _read_loop:
@@ -72,9 +74,11 @@ _read_loop:
 
 
 _add_to_vector:
+    movl indice , %ebx 
     # Aggiungi il carattere al vettore
-    movb %al, vettore(%ecx)
-    incl %ecx            # Incrementa l'indice del vettore
+    movb %al, vettore(%ebx)
+    incl %ebx         # Incrementa l'indice del vettore
+    movl %ebx , indice 
 
     jmp _read_loop      # Torna alla lettura del file
 
