@@ -25,6 +25,7 @@ vettore: .byte 100       # Dimensione del vettore (puoi cambiarla)
 .type readfile, @function
 
 readfile:
+    #movl $0, indice
     jmp _open          # Chiama la funzione per aprire il file
 
     # Fine programma
@@ -97,7 +98,6 @@ _exit:
 
 
      
-
 
 
 
