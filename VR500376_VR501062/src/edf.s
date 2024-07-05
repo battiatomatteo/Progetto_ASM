@@ -1,4 +1,5 @@
-# algoritmo edf Earliest Deadline First (EDF): si pianificano per primi i prodotti la cui scadenza è più vicina, in 
+# algoritmo edf Earliest Deadline First (EDF):
+# si pianificano per primi i prodotti la cui scadenza è più vicina, in 
 # caso di parità nella scadenza, si pianifica il prodotto con la priorità più alta. 
 .section .data
 

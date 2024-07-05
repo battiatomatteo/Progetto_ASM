@@ -13,8 +13,9 @@ buffer: .string ""       # Spazio per il buffer di input
 newline: .byte 10        # Valore del simbolo di nuova linea
 lines: .int 0            # Numero di linee
 indice: .int 0           # variabile per l'indice vettore
+prec: .int 0
+max_i: .int 0
 vettore: .byte 100       # Dimensione del vettore (puoi cambiarla)
-
 
 
 .section .bss
@@ -80,7 +81,7 @@ _add_to_vector:
     movb %al, vettore(%ebx) 
     incl %ebx         # Incrementa l'indice del vettore
     movl %ebx , indice 
-
+    movl indice , max_i
     jmp _read_loop      # Torna alla lettura del file
 
 
@@ -90,12 +91,32 @@ _close_file:
     mov %ebx, %ecx      # File descriptor
     int $0x80           # Interruzione del kernel
 
+    movl $2, indice     # reinizializzo indice a 2 (il primo valore scadena salvato in vettore[2])
+    movl indice, %eax          # salvo l'indice in eax
+    movb vettore(%eax), prec   # salvo il valore precedente nella variabile prec 
+    jmp calcolo         # salto a calcolo 
+
 _exit:
 
     mov $1, %eax        # syscall exit
     xor %ebx, %ebx      # Codice di uscita 0
     int $0x80           # Interruzione del kernel
 
+calcolo: 
+    # sezione che si occupa del calcolo per trovare l'ordine da stampare 
+    
+    incl $4, %eax              # incremento di 4 l'indice per prendere la scadenza sucessiva 
+
+    cmp %eax , max_i             # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
+    jl  exit
+
+    cmpb vettore(%eax), prec    # confronto chi dei due è più grande if(vettore[i]>prec)
+    
+    
+
+    jmp calcolo 
+    
+    
 
      
 
