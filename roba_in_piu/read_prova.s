@@ -96,28 +96,25 @@ _close_file:
     movb vettore(%eax), prec   # salvo il valore precedente nella variabile prec 
     jmp calcolo         # salto a calcolo 
 
+calcolo: 
+    # sezione che si occupa del calcolo per trovare l'ordine da stampare 
+    incl $4, %eax              # incremento di 4 l'indice per prendere la scadenza sucessiva 
+
+    cmp %eax , max_i             # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
+    jl  exit
+    # confronto chi dei due è più grande if(vettore[i]>prec) modifico prec se no rimane lo stesso
+    cmpb vettore(%eax), prec    
+
+    # movl vettore(%eax), prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
+
+    jmp calcolo 
+    
+    
 _exit:
 
     mov $1, %eax        # syscall exit
     xor %ebx, %ebx      # Codice di uscita 0
     int $0x80           # Interruzione del kernel
-
-calcolo: 
-    # sezione che si occupa del calcolo per trovare l'ordine da stampare 
-    
-    incl $4, %eax              # incremento di 4 l'indice per prendere la scadenza sucessiva 
-
-    cmp %eax , max_i             # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
-    jl  exit
-
-    cmpb vettore(%eax), prec    # confronto chi dei due è più grande if(vettore[i]>prec)
-    
-    
-
-    jmp calcolo 
-    
-    
-
      
 
 
