@@ -13,9 +13,12 @@ buffer: .string ""       # Spazio per il buffer di input
 newline: .byte 10        # Valore del simbolo di nuova linea
 lines: .int 0            # Numero di linee
 indice: .int 0           # variabile per l'indice vettore
+indice_2: .int 0           # variabile per l'indice vettore
 prec: .int 0
 max_i: .int 0
+cambiamenti: .int 0
 vettore: .byte 100       # Dimensione del vettore (puoi cambiarla)
+vettore_2: .byte 100       # Dimensione del vettore (puoi cambiarla)
 
 
 .section .bss
@@ -93,6 +96,8 @@ _close_file:
 
     movl $2, indice     # reinizializzo indice a 2 (il primo valore scadena salvato in vettore[2])
     movl indice, %eax          # salvo l'indice in eax
+    movl $0, indice 
+    movl $0, indice_2 
     movb vettore(%eax), prec   # salvo il valore precedente nella variabile prec 
     jmp calcolo         # salto a calcolo 
 
@@ -104,11 +109,61 @@ calcolo:
     jl  exit
     # confronto chi dei due è più grande if(vettore[i]>prec) modifico prec se no rimane lo stesso
     cmpb vettore(%eax), prec    
+    jl calcolo_2 
 
-    # movl vettore(%eax), prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
+    movl vettore(%eax), prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
+    addl $4, indice 
 
     jmp calcolo 
+
+calcolo_2:
+    #scoposto i valori 
+    #movl inidice_2, %ecx
+    movl %eax, %ebx
+
+    #faccio una copia del primo ordine
+    subl $6, %ebx
+    movb vettore(%ebx), vettore_2($0)
+    incl %ebx
+    movb vettore(%ebx), vettore_2($1)
+    incl %ebx
+    movb vettore(%ebx), vettore_2($2)
+    incl %ebx
+    movb vettore(%ebx), vettore_2($3)
+
+    #sposto il secondo ordine al posto del primo
+    movl %eax, %ebx
+    movl %eax, %ecx
+    subl $6, %ebx
+    subl $2, %ecx
+    movb vettore(%ecx), vettore(%ebx)
+    incl %ebx
+    incl %ecx
+    movb vettore(%ecx), vettore(%ebx)
+    incl %ebx
+    incl %ecx
+    movb vettore(%ecx), vettore(%ebx)
+    incl %ebx
+    incl %ecx
+    movb vettore(%ecx), vettore(%ebx)
+
+
+    #sposto il primo ordine al posto del secondo
+    movl %eax, %ebx
+    subl $2, %ebx
+    movb vettore_2($0), vettore(%ebx)
+    incl %ebx
+    movb vettore_2($1), vettore(%ebx)
+    incl %ebx
+    movb vettore_2($2), vettore(%ebx)
+    incl %ebx
+    movb vettore_2($3), vettore(%ebx) 
+
     
+
+    movl vettore(%eax), prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
+
+    jmp calcolo
     
 _exit:
 
