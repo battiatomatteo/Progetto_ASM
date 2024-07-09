@@ -68,15 +68,6 @@ _read_loop:
     # incw lines          # altrimenti, incremento il contatore
     incl lines            # Altrimenti, incremento il contatore
 
-# _print_line:
-    # Stampa il contenuto della riga
-    # mov $4, %eax        # syscall write
-    # mov $1, %ebx        # File descriptor standard output (stdout)
-    # mov $buffer, %ecx   # Buffer di output
-    # int $0x80           # Interruzione del kernel
-
-    #jmp _read_loop      # Torna alla lettura del file
-
 
 _add_to_vector:
     movl indice , %ebx 
