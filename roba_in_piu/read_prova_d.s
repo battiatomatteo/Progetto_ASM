@@ -84,7 +84,7 @@ _add_to_vector:
     movb %al, vettore(%ebx) 
     incl %ebx         # Incrementa l'indice del vettore
     movl %ebx , indice 
-    movl indice , max_i
+    movl %ebx , max_i
     jmp _read_loop      # Torna alla lettura del file
 
 
@@ -98,70 +98,94 @@ _close_file:
     movl indice, %eax          # salvo l'indice in eax
     movl $0, indice 
     movl $0, indice_2 
-    movb vettore(%eax), prec   # salvo il valore precedente nella variabile prec 
+    movl vettore(%eax), %ebx
+    movl %ebx, prec     # salvo il valore precedente nella variabile prec 
     jmp calcolo         # salto a calcolo 
 
 calcolo: 
     # sezione che si occupa del calcolo per trovare l'ordine da stampare 
-    incl $4, %eax              # incremento di 4 l'indice per prendere la scadenza sucessiva 
+    addl $4, %eax              # incremento di 4 l'indice per prendere la scadenza sucessiva 
 
     cmp %eax , max_i             # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
-    jl  exit
+    jl  _exit
     # confronto chi dei due è più grande if(vettore[i]>prec) modifico prec se no rimane lo stesso
-    cmpb vettore(%eax), prec    
+    movl prec, %ebx
+    cmpl vettore(%eax), %ebx   
     jl calcolo_2 
 
-    movl vettore(%eax), prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
+    movl vettore(%eax), %ebx
+    movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
     addl $4, indice 
 
     jmp calcolo 
 
 calcolo_2:
     #scoposto i valori 
-    #movl inidice_2, %ecx
+    movl %eax, indice_2
     movl %eax, %ebx
 
     #faccio una copia del primo ordine
     subl $6, %ebx
-    movb vettore(%ebx), vettore_2($0)
+    movl $0, %ecx
+    movl vettore(%ebx), %eax
+    movl %eax , vettore_2(%ecx)
     incl %ebx
-    movb vettore(%ebx), vettore_2($1)
+    incl %ecx
+    movl vettore(%ebx), %eax
+    movl %eax , vettore_2(%ecx)
     incl %ebx
-    movb vettore(%ebx), vettore_2($2)
+    incl %ecx
+    movl vettore(%ebx), %eax
+    movl %eax , vettore_2(%ecx)
     incl %ebx
-    movb vettore(%ebx), vettore_2($3)
+    incl %ecx
+    movl vettore(%ebx), %eax
+    movl %eax , vettore_2(%ecx)
 
     #sposto il secondo ordine al posto del primo
     movl %eax, %ebx
     movl %eax, %ecx
     subl $6, %ebx
     subl $2, %ecx
-    movb vettore(%ecx), vettore(%ebx)
+    movl vettore(%ecx), %eax
+    movl %eax , vettore(%ebx)
     incl %ebx
     incl %ecx
-    movb vettore(%ecx), vettore(%ebx)
+    movl vettore(%ecx), %eax
+    movl %eax , vettore(%ebx)
     incl %ebx
     incl %ecx
-    movb vettore(%ecx), vettore(%ebx)
+    movl vettore(%ecx), %eax
+    movl %eax , vettore(%ebx)
     incl %ebx
     incl %ecx
-    movb vettore(%ecx), vettore(%ebx)
+    movl vettore(%ecx), %eax
+    movl %eax , vettore(%ebx)
 
 
     #sposto il primo ordine al posto del secondo
     movl %eax, %ebx
     subl $2, %ebx
-    movb vettore_2($0), vettore(%ebx)
+    movl $0, %ecx
+    movl vettore_2( %ecx ), %eax
+    movl %eax , vettore(%ebx)
     incl %ebx
-    movb vettore_2($1), vettore(%ebx)
+    incl %ecx
+    movl vettore_2( %ecx ), %eax
+    movl %eax , vettore(%ebx)
     incl %ebx
-    movb vettore_2($2), vettore(%ebx)
+    incl %ecx
+    movl vettore_2( %ecx ), %eax
+    movl %eax , vettore(%ebx)
     incl %ebx
-    movb vettore_2($3), vettore(%ebx) 
+    incl %ecx
+    movl vettore_2( %ecx ), %eax
+    movl %eax , vettore(%ebx)
 
     
-
-    movl vettore(%eax), prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
+    movl indice_2,  %eax 
+    movl vettore(%eax), %ebx
+    movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
 
     jmp calcolo
     
@@ -170,7 +194,9 @@ _exit:
     mov $1, %eax        # syscall exit
     xor %ebx, %ebx      # Codice di uscita 0
     int $0x80           # Interruzione del kernel
-     
+
+
+
 
 
 

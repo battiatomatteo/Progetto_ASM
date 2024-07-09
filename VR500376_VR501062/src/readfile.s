@@ -13,8 +13,12 @@ buffer: .string ""       # Spazio per il buffer di input
 newline: .byte 10        # Valore del simbolo di nuova linea
 lines: .int 0            # Numero di linee
 indice: .int 0           # variabile per l'indice vettore
+indice_2: .int 0           # variabile per l'indice vettore
+prec: .int 0
+max_i: .int 0
+cambiamenti: .int 0
 vettore: .byte 100       # Dimensione del vettore (puoi cambiarla)
-
+vettore_2: .byte 100       # Dimensione del vettore (puoi cambiarla)
 
 
 .section .bss
@@ -77,10 +81,10 @@ _read_loop:
 _add_to_vector:
     movl indice , %ebx 
     # Aggiungi il carattere al vettore
-    movb %al, vettore(%ebx)
+    movb %al, vettore(%ebx) 
     incl %ebx         # Incrementa l'indice del vettore
     movl %ebx , indice 
-
+    movl %ebx , max_i
     jmp _read_loop      # Torna alla lettura del file
 
 
@@ -90,6 +94,102 @@ _close_file:
     mov %ebx, %ecx      # File descriptor
     int $0x80           # Interruzione del kernel
 
+    movl $2, indice     # reinizializzo indice a 2 (il primo valore scadena salvato in vettore[2])
+    movl indice, %eax          # salvo l'indice in eax
+    movl $0, indice 
+    movl $0, indice_2 
+    movl vettore(%eax), %ebx
+    movl %ebx, prec     # salvo il valore precedente nella variabile prec 
+    jmp calcolo         # salto a calcolo 
+
+calcolo: 
+    # sezione che si occupa del calcolo per trovare l'ordine da stampare 
+    # errore 
+    addl $4, %eax              # incremento di 4 l'indice per prendere la scadenza sucessiva 
+
+    cmp %eax , max_i             # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
+    jl  _exit
+    # confronto chi dei due è più grande if(vettore[i]>prec) modifico prec se no rimane lo stesso
+    movl prec, %ebx
+    cmpl vettore(%eax), %ebx   
+    jl calcolo_2 
+
+    movl vettore(%eax), %ebx
+    movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
+    addl $4, indice 
+
+    jmp calcolo 
+
+calcolo_2:
+    #scoposto i valori 
+    movl %eax, indice_2
+    movl %eax, %ebx
+
+    #faccio una copia del primo ordine
+    subl $6, %ebx
+    movl $0, %ecx
+    movl vettore(%ebx), %eax
+    movl %eax , vettore_2(%ecx)
+    incl %ebx
+    incl %ecx
+    movl vettore(%ebx), %eax
+    movl %eax , vettore_2(%ecx)
+    incl %ebx
+    incl %ecx
+    movl vettore(%ebx), %eax
+    movl %eax , vettore_2(%ecx)
+    incl %ebx
+    incl %ecx
+    movl vettore(%ebx), %eax
+    movl %eax , vettore_2(%ecx)
+
+    #sposto il secondo ordine al posto del primo
+    movl %eax, %ebx
+    movl %eax, %ecx
+    subl $6, %ebx
+    subl $2, %ecx
+    movl vettore(%ecx), %eax
+    movl %eax , vettore(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore(%ecx), %eax
+    movl %eax , vettore(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore(%ecx), %eax
+    movl %eax , vettore(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore(%ecx), %eax
+    movl %eax , vettore(%ebx)
+
+
+    #sposto il primo ordine al posto del secondo
+    movl %eax, %ebx
+    subl $2, %ebx
+    movl $0, %ecx
+    movl vettore_2( %ecx ), %eax
+    movl %eax , vettore(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore_2( %ecx ), %eax
+    movl %eax , vettore(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore_2( %ecx ), %eax
+    movl %eax , vettore(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore_2( %ecx ), %eax
+    movl %eax , vettore(%ebx)
+
+    
+    movl indice_2,  %eax 
+    movl vettore(%eax), %ebx
+    movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
+
+    jmp calcolo
+    
 _exit:
 
     mov $1, %eax        # syscall exit
@@ -97,7 +197,7 @@ _exit:
     int $0x80           # Interruzione del kernel
 
 
-     
+
 
 
 
