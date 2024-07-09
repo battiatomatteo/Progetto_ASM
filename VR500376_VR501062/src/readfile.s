@@ -107,7 +107,7 @@ calcolo:
 
     movl vettore(%eax), %ebx
     movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
-    addl $4, indice 
+    # addl $4, indice 
 
     jmp calcolo 
 
