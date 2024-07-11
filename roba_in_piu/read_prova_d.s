@@ -68,15 +68,6 @@ _read_loop:
     # incw lines          # altrimenti, incremento il contatore
     incl lines            # Altrimenti, incremento il contatore
 
-# _print_line:
-    # Stampa il contenuto della riga
-    # mov $4, %eax        # syscall write
-    # mov $1, %ebx        # File descriptor standard output (stdout)
-    # mov $buffer, %ecx   # Buffer di output
-    # int $0x80           # Interruzione del kernel
-
-    #jmp _read_loop      # Torna alla lettura del file
-
 
 _add_to_vector:
     movl indice , %ebx 
@@ -104,6 +95,7 @@ _close_file:
 
 calcolo: 
     # sezione che si occupa del calcolo per trovare l'ordine da stampare 
+    # errore 
     addl $4, %eax              # incremento di 4 l'indice per prendere la scadenza sucessiva 
 
     cmp %eax , max_i             # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
@@ -115,7 +107,7 @@ calcolo:
 
     movl vettore(%eax), %ebx
     movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
-    addl $4, indice 
+    # addl $4, indice 
 
     jmp calcolo 
 

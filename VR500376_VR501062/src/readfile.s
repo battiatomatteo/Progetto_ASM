@@ -19,6 +19,7 @@ max_i: .int 0
 cambiamenti: .int 0
 vettore: .byte 100       # Dimensione del vettore (puoi cambiarla)
 vettore_2: .byte 100       # Dimensione del vettore (puoi cambiarla)
+vettore_int: .int 100       # Dimensione del vettore (puoi cambiarla)
 
 
 .section .bss
@@ -85,14 +86,17 @@ _close_file:
     mov %ebx, %ecx      # File descriptor
     int $0x80           # Interruzione del kernel
 
+    jmp char_to_int_in
+     
+in_calcolo:
     movl $2, indice     # reinizializzo indice a 2 (il primo valore scadena salvato in vettore[2])
     movl indice, %eax          # salvo l'indice in eax
     movl $0, indice 
     movl $0, indice_2 
     movl vettore(%eax), %ebx
     movl %ebx, prec     # salvo il valore precedente nella variabile prec 
-    jmp calcolo         # salto a calcolo 
-
+    jmp calcolo         # salto a calcolo
+    
 calcolo: 
     # sezione che si occupa del calcolo per trovare l'ordine da stampare 
     # errore 
@@ -119,19 +123,19 @@ calcolo_2:
     #faccio una copia del primo ordine
     subl $6, %ebx
     movl $0, %ecx
-    movl vettore(%ebx), %eax
+    movl vettore_int(%ebx), %eax
     movl %eax , vettore_2(%ecx)
     incl %ebx
     incl %ecx
-    movl vettore(%ebx), %eax
+    movl vettore_int(%ebx), %eax
     movl %eax , vettore_2(%ecx)
     incl %ebx
     incl %ecx
-    movl vettore(%ebx), %eax
+    movl vettore_int(%ebx), %eax
     movl %eax , vettore_2(%ecx)
     incl %ebx
     incl %ecx
-    movl vettore(%ebx), %eax
+    movl vettore_int(%ebx), %eax
     movl %eax , vettore_2(%ecx)
 
     #sposto il secondo ordine al posto del primo
@@ -139,20 +143,20 @@ calcolo_2:
     movl %eax, %ecx
     subl $6, %ebx
     subl $2, %ecx
-    movl vettore(%ecx), %eax
-    movl %eax , vettore(%ebx)
+    movl vettore_int(%ecx), %eax
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
-    movl vettore(%ecx), %eax
-    movl %eax , vettore(%ebx)
+    movl vettore_int(%ecx), %eax
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
-    movl vettore(%ecx), %eax
-    movl %eax , vettore(%ebx)
+    movl vettore_int(%ecx), %eax
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
-    movl vettore(%ecx), %eax
-    movl %eax , vettore(%ebx)
+    movl vettore_int(%ecx), %eax
+    movl %eax , vettore_int(%ebx)
 
 
     #sposto il primo ordine al posto del secondo
@@ -160,19 +164,19 @@ calcolo_2:
     subl $2, %ebx
     movl $0, %ecx
     movl vettore_2( %ecx ), %eax
-    movl %eax , vettore(%ebx)
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
     movl vettore_2( %ecx ), %eax
-    movl %eax , vettore(%ebx)
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
     movl vettore_2( %ecx ), %eax
-    movl %eax , vettore(%ebx)
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
     movl vettore_2( %ecx ), %eax
-    movl %eax , vettore(%ebx)
+    movl %eax , vettore_int(%ebx)
 
     
     movl indice_2,  %eax 
@@ -180,6 +184,55 @@ calcolo_2:
     movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
 
     jmp calcolo
+
+char_to_int_in:  				
+
+  xorl %eax,%eax			# Azzero registri General Purpose
+  xorl %ebx,%ebx           
+  xorl %ecx,%ecx           
+  xorl %edx,%edx
+
+  movl $0 ,indice
+
+  jmp char_to_int
+
+
+char_to_int:
+
+    cmpl %eax , max_i       # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
+    jg in_calcolo
+
+    movb vettore(%eax) , %bl
+
+    cmpb $10, %bl  # controllo se il char è uguale a '\n'
+	je fine_campo
+	cmpb $44, %bl   # controllo se il char è uguale a ','
+	je fine_campo
+	cmpb $48, %bl   # controllo se è 0
+	jge check 
+
+
+fine_campo:
+    incl %eax              # incremento l'indice
+    movl indice , %edx
+    movl %ecx, vettore_int(%edx)
+    incl %edx
+    movl %edx, indice
+    jmp char_to_int
+
+valore:
+    subl $48, %ebx
+	mull %ecx, $10   # crea il numero , lo moltiplica per 10
+	addl %ecx, %ebx
+    
+	jmp char_to_int
+
+check:
+	cmpb $57, %bl 
+	jle valore
+    
+
+
     
 _exit:
 
@@ -191,4 +244,7 @@ _exit:
 
 
 
+
+
+	
 
