@@ -187,50 +187,53 @@ calcolo_2:
 
 char_to_int_in:  				
 
-  xorl %eax,%eax			# Azzero registri General Purpose
-  xorl %ebx,%ebx           
-  xorl %ecx,%ecx           
-  xorl %edx,%edx
+    xorl %eax,%eax			# Azzero registri General Purpose
+    xorl %ebx,%ebx           
+    xorl %ecx,%ecx           
+    xorl %edx,%edx
 
-  movl $0 ,indice
+    movl $0 ,indice
 
-  jmp char_to_int
+    jmp char_to_int
 
 
 char_to_int:
 
-    cmpl %eax , max_i       # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
+    cmpl %ecx , max_i       # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
     jg in_calcolo
 
-    movb vettore(%eax) , %bl
+    movb vettore(%ecx) , %bl
 
     cmpb $10, %bl  # controllo se il char è uguale a '\n'
 	je fine_campo
 	cmpb $44, %bl   # controllo se il char è uguale a ','
 	je fine_campo
-	cmpb $48, %bl   # controllo se è 0
+	cmpb $48, %bl   # controllo se è maggiore di '0'
 	jge check 
 
 
 fine_campo:
-    incl %eax              # incremento l'indice
+    incl %ecx              # incremento l'indice
     movl indice , %edx
-    movl %ecx, vettore_int(%edx)
+    movl %eax, vettore_int(%edx)
     incl %edx
     movl %edx, indice
     jmp char_to_int
 
+# mul moltiplica il valore contenuto in eax per quello che gli do come 
+# operando e il risultato è contenuto in edx + eax 
 valore:
     subl $48, %ebx
-	mull %ecx, $10   # crea il numero , lo moltiplica per 10
-	addl %ecx, %ebx
+    movl $10, %edx
+	mul %edx   # crea il numero , lo moltiplica per 10
+	addl %ebx, %eax 
     
 	jmp char_to_int
 
 check:
-	cmpb $57, %bl 
+	cmpb $57, %bl # controllo se è minore di '9'
 	jle valore
-    
+    #gestire errore
 
 
     
@@ -241,10 +244,4 @@ _exit:
     int $0x80           # Interruzione del kernel
 
 
-
-
-
-
-
-	
 
