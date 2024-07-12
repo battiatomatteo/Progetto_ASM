@@ -200,7 +200,7 @@ char_to_int_in:
 char_to_int:
 
     cmpl %ecx , max_i       # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
-    jg in_calcolo
+    jl in_calcolo
 
     movb vettore(%ecx) , %bl
 
@@ -208,8 +208,8 @@ char_to_int:
 	je fine_campo
 	cmpb $44, %bl   # controllo se il char è uguale a ','
 	je fine_campo
-	cmpb $48, %bl   # controllo se è maggiore di '0'
-	jge check 
+	cmpb $47, %bl   # controllo se è maggiore di '0'
+	jg check 
 
 
 fine_campo:
@@ -227,7 +227,7 @@ valore:
     movl $10, %edx
 	mul %edx   # crea il numero , lo moltiplica per 10
 	addl %ebx, %eax 
-    
+    incl %ecx
 	jmp char_to_int
 
 check:
