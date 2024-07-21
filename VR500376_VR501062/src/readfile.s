@@ -17,12 +17,15 @@ indice_2: .int 0           # variabile per l'indice vettore
 prec: .int 0
 max_i: .int 0
 cambiamenti: .int 0
-vettore: .byte 100       # Dimensione del vettore (puoi cambiarla)
-vettore_2: .byte 100       # Dimensione del vettore (puoi cambiarla)
-vettore_int: .int 100       # Dimensione del vettore (puoi cambiarla)
+# vettore: .byte 100       # Dimensione del vettore (puoi cambiarla)
+# vettore_2: .byte 100       # Dimensione del vettore (puoi cambiarla)
+# vettore_int: .int 100       # Dimensione del vettore (puoi cambiarla)
 
 
 .section .bss
+vettore: .space 140       # Dimensione del vettore 
+vettore_2: .space 13       # Dimensione del vettore (puoi cambiarla)
+vettore_int: .space 200       # Dimensione del vettore (puoi cambiarla)
 
 .section .text
     .global readfile
@@ -116,7 +119,7 @@ calcolo:
     jmp calcolo 
 
 calcolo_2:
-    #scoposto i valori 
+    # scoposto i valori 
     movl %eax, indice_2
     movl %eax, %ebx
 
@@ -138,7 +141,7 @@ calcolo_2:
     movl vettore_int(%ebx), %eax
     movl %eax , vettore_2(%ecx)
 
-    #sposto il secondo ordine al posto del primo
+    # sposto il secondo ordine al posto del primo
     movl %eax, %ebx
     movl %eax, %ecx
     subl $6, %ebx
@@ -159,7 +162,7 @@ calcolo_2:
     movl %eax , vettore_int(%ebx)
 
 
-    #sposto il primo ordine al posto del secondo
+    # sposto il primo ordine al posto del secondo
     movl %eax, %ebx
     subl $2, %ebx
     movl $0, %ecx
@@ -192,6 +195,9 @@ char_to_int_in:
     xorl %ecx,%ecx           
     xorl %edx,%edx
 
+    leal vettore, %esi         # carico l'indirizzo di vettore nel registro
+    leal vettore_int, %edi        # carico l'indirizzo di vettore_int nel registro
+
     movl $0 ,indice
 
     jmp char_to_int
@@ -202,7 +208,8 @@ char_to_int:
     cmpl %ecx , max_i       # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
     jl in_calcolo
 
-    movb vettore(%ecx) , %bl
+    movb (%esi) , %bl
+    incl %esi
 
     cmpb $10, %bl  # controllo se il char è uguale a '\n'
 	je fine_campo
@@ -214,10 +221,10 @@ char_to_int:
 
 fine_campo:
     incl %ecx              # incremento l'indice
-    movl indice , %edx
-    movl %eax, vettore_int(%edx)
-    incl %edx
-    movl %edx, indice
+    movl %eax, (%edi)
+    addl $4 , %edi
+    xorl %eax, %eax
+    
     jmp char_to_int
 
 # mul moltiplica il valore contenuto in eax per quello che gli do come 
@@ -242,6 +249,19 @@ _exit:
     mov $1, %eax        # syscall exit
     xor %ebx, %ebx      # Codice di uscita 0
     int $0x80           # Interruzione del kernel
+
+
+
+
+
+# aggiornamenti
+# ho aggiunto la parte degli array con il .space per creare lo spazio in memoria
+# ho sitemato nella parte qua sopra e ho fatto usare esi e esi per gli indirizzi di vettore e di vettore int
+# per evitare di continuare a spostare i valori da una parte all'altra
+
+# adesso fa l'array di interi lo fa fatto bene bisogna solo sistemare il fatto che fa una volta in più 
+# e di conseguenza l'ultimo numero non lo salva ma almeno adesso non si sovrappongono più
+
 
 
 
