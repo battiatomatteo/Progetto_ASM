@@ -17,11 +17,15 @@ indice_2: .int 0           # variabile per l'indice vettore
 prec: .int 0
 max_i: .int 0
 cambiamenti: .int 0
-vettore: .byte 100       # Dimensione del vettore (puoi cambiarla)
-vettore_2: .byte 100       # Dimensione del vettore (puoi cambiarla)
+# vettore: .byte 100       # Dimensione del vettore (puoi cambiarla)
+# vettore_2: .byte 100       # Dimensione del vettore (puoi cambiarla)
+# vettore_int: .int 100       # Dimensione del vettore (puoi cambiarla)
 
 
 .section .bss
+vettore: .space 140       # Dimensione del vettore 
+vettore_2: .space 13       # Dimensione del vettore (puoi cambiarla)
+vettore_int: .space 200       # Dimensione del vettore (puoi cambiarla)
 
 .section .text
     .global readfile
@@ -85,14 +89,17 @@ _close_file:
     mov %ebx, %ecx      # File descriptor
     int $0x80           # Interruzione del kernel
 
+    jmp char_to_int_in
+     
+in_calcolo:
     movl $2, indice     # reinizializzo indice a 2 (il primo valore scadena salvato in vettore[2])
     movl indice, %eax          # salvo l'indice in eax
     movl $0, indice 
     movl $0, indice_2 
     movl vettore(%eax), %ebx
     movl %ebx, prec     # salvo il valore precedente nella variabile prec 
-    jmp calcolo         # salto a calcolo 
-
+    jmp calcolo         # salto a calcolo
+    
 calcolo: 
     # sezione che si occupa del calcolo per trovare l'ordine da stampare 
     # errore 
@@ -100,10 +107,10 @@ calcolo:
 
     cmp %eax , max_i             # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
     jl  _exit
-    # confronto chi dei due è più grande if(vettore[i]>prec) modifico prec se no rimane lo stesso
+    # confronto chi dei due è più piccolo if(vettore[i]<prec) modifico prec se no rimane lo stesso
     movl prec, %ebx
     cmpl vettore(%eax), %ebx   
-    jl calcolo_2 
+    jg calcolo_2 
 
     movl vettore(%eax), %ebx
     movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
@@ -112,67 +119,67 @@ calcolo:
     jmp calcolo 
 
 calcolo_2:
-    #scoposto i valori 
+    # scoposto i valori 
     movl %eax, indice_2
     movl %eax, %ebx
 
     #faccio una copia del primo ordine
     subl $6, %ebx
     movl $0, %ecx
-    movl vettore(%ebx), %eax
+    movl vettore_int(%ebx), %eax
     movl %eax , vettore_2(%ecx)
     incl %ebx
     incl %ecx
-    movl vettore(%ebx), %eax
+    movl vettore_int(%ebx), %eax
     movl %eax , vettore_2(%ecx)
     incl %ebx
     incl %ecx
-    movl vettore(%ebx), %eax
+    movl vettore_int(%ebx), %eax
     movl %eax , vettore_2(%ecx)
     incl %ebx
     incl %ecx
-    movl vettore(%ebx), %eax
+    movl vettore_int(%ebx), %eax
     movl %eax , vettore_2(%ecx)
 
-    #sposto il secondo ordine al posto del primo
+    # sposto il secondo ordine al posto del primo
     movl %eax, %ebx
     movl %eax, %ecx
     subl $6, %ebx
     subl $2, %ecx
-    movl vettore(%ecx), %eax
-    movl %eax , vettore(%ebx)
+    movl vettore_int(%ecx), %eax
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
-    movl vettore(%ecx), %eax
-    movl %eax , vettore(%ebx)
+    movl vettore_int(%ecx), %eax
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
-    movl vettore(%ecx), %eax
-    movl %eax , vettore(%ebx)
+    movl vettore_int(%ecx), %eax
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
-    movl vettore(%ecx), %eax
-    movl %eax , vettore(%ebx)
+    movl vettore_int(%ecx), %eax
+    movl %eax , vettore_int(%ebx)
 
 
-    #sposto il primo ordine al posto del secondo
+    # sposto il primo ordine al posto del secondo
     movl %eax, %ebx
     subl $2, %ebx
     movl $0, %ecx
     movl vettore_2( %ecx ), %eax
-    movl %eax , vettore(%ebx)
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
     movl vettore_2( %ecx ), %eax
-    movl %eax , vettore(%ebx)
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
     movl vettore_2( %ecx ), %eax
-    movl %eax , vettore(%ebx)
+    movl %eax , vettore_int(%ebx)
     incl %ebx
     incl %ecx
     movl vettore_2( %ecx ), %eax
-    movl %eax , vettore(%ebx)
+    movl %eax , vettore_int(%ebx)
 
     
     movl indice_2,  %eax 
@@ -180,6 +187,62 @@ calcolo_2:
     movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
 
     jmp calcolo
+
+char_to_int_in:  				
+
+    xorl %eax,%eax			# Azzero registri General Purpose
+    xorl %ebx,%ebx           
+    xorl %ecx,%ecx           
+    xorl %edx,%edx
+
+    leal vettore, %esi         # carico l'indirizzo di vettore nel registro
+    leal vettore_int, %edi        # carico l'indirizzo di vettore_int nel registro
+
+    movl $0 ,indice
+
+    jmp char_to_int
+
+
+char_to_int:
+
+    cmpl %ecx , max_i       # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
+    jl in_calcolo
+
+    movb (%esi) , %bl
+    incl %esi
+
+    cmpb $10, %bl  # controllo se il char è uguale a '\n'
+	je fine_campo
+	cmpb $44, %bl   # controllo se il char è uguale a ','
+	je fine_campo
+	cmpb $47, %bl   # controllo se è maggiore di '0'
+	jg check 
+
+
+fine_campo:
+    incl %ecx              # incremento l'indice
+    movl %eax, (%edi)
+    addl $4 , %edi
+    xorl %eax, %eax
+    
+    jmp char_to_int
+
+# mul moltiplica il valore contenuto in eax per quello che gli do come 
+# operando e il risultato è contenuto in edx + eax 
+valore:
+    subl $48, %ebx
+    movl $10, %edx
+	mul %edx   # crea il numero , lo moltiplica per 10
+	addl %ebx, %eax 
+    incl %ecx
+	jmp char_to_int
+
+check:
+	cmpb $57, %bl # controllo se è minore di '9'
+	jle valore
+    #gestire errore
+
+
     
 _exit:
 
@@ -188,6 +251,16 @@ _exit:
     int $0x80           # Interruzione del kernel
 
 
+
+
+
+# aggiornamenti
+# ho aggiunto la parte degli array con il .space per creare lo spazio in memoria
+# ho sitemato nella parte qua sopra e ho fatto usare esi e esi per gli indirizzi di vettore e di vettore int
+# per evitare di continuare a spostare i valori da una parte all'altra
+
+# adesso fa l'array di interi lo fa fatto bene bisogna solo sistemare il fatto che fa una volta in più 
+# e di conseguenza l'ultimo numero non lo salva ma almeno adesso non si sovrappongono più
 
 
 

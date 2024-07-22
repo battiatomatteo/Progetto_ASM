@@ -107,10 +107,10 @@ calcolo:
 
     cmp %eax , max_i             # controllo se ci stanno altre scadenze ,  deve essere (eax<max_i)
     jl  _exit
-    # confronto chi dei due è più grande if(vettore[i]>prec) modifico prec se no rimane lo stesso
+    # confronto chi dei due è più piccolo if(vettore[i]<prec) modifico prec se no rimane lo stesso
     movl prec, %ebx
     cmpl vettore(%eax), %ebx   
-    jl calcolo_2 
+    jg calcolo_2 
 
     movl vettore(%eax), %ebx
     movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
@@ -238,8 +238,8 @@ valore:
 	jmp char_to_int
 
 check:
-	cmpb $57, %bl # controllo se è minore di '9'
-	jle valore
+	cmpb $58, %bl # controllo se è minore di '9'
+	jl valore
     #gestire errore
 
 
