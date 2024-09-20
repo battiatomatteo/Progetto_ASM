@@ -1,0 +1,78 @@
+scambia:
+	pushl %ecx
+
+	cmpb $0, (%edx,%ecx,1)
+	je fine_scambia
+
+	movb (%edx,%ecx,1), %al
+	movb %al,(%edi,%ecx,1)
+
+	incl %ecx
+	jmp scambia
+
+
+
+fine_scambia:
+	
+	popl %ecx
+	ret
+
+
+
+
+
+
+
+
+
+scambia:
+	pushl %ecx
+
+	movb (%edx,%ecx,1), %al
+	movb %al,(%edi,%ecx,1)
+
+	incl %ecx
+
+	cmpb $0, (%edx,%ecx,1)
+	jne scambia
+	
+	popl %ecx
+	ret
+
+
+
+
+
+
+
+.section .data
+
+
+.section .text
+	.global scambia
+
+.type scambia, @function
+
+scambia:
+
+	pushl %ecx
+
+	jmp start
+
+start:
+	
+	cmpb $0, (%edx,%ecx,1)
+	je fine_scambia
+
+	movb (%edx,%ecx,1), %al
+	movb %al,(%edi,%ecx,1)
+
+	incl %ecx
+	jmp start
+
+fine_scambia:
+	
+	popl %ecx
+
+	ret
+	

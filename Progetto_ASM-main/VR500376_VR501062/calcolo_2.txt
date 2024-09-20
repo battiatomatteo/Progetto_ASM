@@ -1,0 +1,69 @@
+# sposto i valori 
+    movl %edx, indice_2
+    movl %edx, %ebx
+
+    # faccio una copia del primo ordine
+    subl $6, %ebx
+    movl $0, %ecx
+    movl vettore_int(%ebx), %edx
+    movl %edx , vettore_2(%ecx)
+    incl %ebx
+    incl %ecx
+
+    movl vettore_int(%ebx), %edx
+    movl %edx , vettore_2(%ecx)
+    incl %ebx
+    incl %ecx
+
+    movl vettore_int(%ebx), %edx
+    movl %edx , vettore_2(%ecx)
+    incl %ebx
+    incl %ecx
+    
+    movl vettore_int(%ebx), %edx
+    movl %edx , vettore_2(%ecx)
+
+    # sposto il secondo ordine al posto del primo
+    movl %edx, %ebx
+    movl %edx, %ecx
+    subl $6, %ebx
+    subl $2, %ecx
+    movl vettore_int(%ecx), %edx
+    movl %edx , vettore_int(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore_int(%ecx), %edx
+    movl %edx , vettore_int(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore_int(%ecx), %edx
+    movl %edx , vettore_int(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore_int(%ecx), %edx
+    movl %edx , vettore_int(%ebx)
+
+
+    # sposto il primo ordine al posto del secondo
+    movl %edx, %ebx
+    subl $2, %ebx
+    movl $0, %ecx
+    movl vettore_2( %ecx ), %edx
+    movl %edx , vettore_int(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore_2( %ecx ), %edx
+    movl %edx , vettore_int(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore_2( %ecx ), %edx
+    movl %edx , vettore_int(%ebx)
+    incl %ebx
+    incl %ecx
+    movl vettore_2( %ecx ), %edx
+    movl %edx , vettore_int(%ebx)
+
+    
+    movl indice_2,  %edx 
+    movl vettore(%edx), %ebx
+    movl %ebx, prec    # sposto il vavolre di vettore(%eax) in prec se prec e minore 
