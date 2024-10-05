@@ -1,7 +1,7 @@
 .section .data
 
 numstr:
-    .ascii "0000\n"
+    .ascii "00"
 
 numstr_ln:
     .long . - numstr
@@ -14,7 +14,6 @@ numstr_ln:
 
 scanf:
 
-    #movl %eax, numstr
     # scanf -> lettura numero da tastiera 
 	movl $3, %eax
 	movl $1, %ebx
@@ -30,26 +29,21 @@ atoi:
     xorl %ecx,%ecx                
     xorl %edx,%edx
     
-ripeti:
-    movb (%ecx,%esi,1), %bl  # Carica il byte corrente dalla stringa in %bl
-    cmp $10, %bl             # Confronta con il valore ASCII di '\n'
-    je fine_itoa             # Se è '\n', termina la conversione
-    subb $48, %bl            # Converti il carattere ASCII della cifra nel valore numerico
-    movl $10, %edx
-    mulb %dl                 # EBX = EBX * 10
-    addl %ebx, %eax          # Aggiungi il valore della cifra a EBX
-    inc %ecx                 # Passa al carattere successivo
-    jmp ripeti               # Torna all'inizio del ciclo
-
-fine_itoa:
-    #fino a qui arriva
-    
-    # movl $4, %eax
-	# movl $1, %ebx
-    # leal numstr, %ecx
-    # movl numstr_ln, %edx
-	# int $0x80
-
-    # movl numstr, %eax
-
+controllo:
+    movb (%esi), %bl  # Carica il byte corrente dalla stringa in %bl
+    cmpb $48, %bl
+    jl valore_non_valido
+    cmpb $50, %bl
+    jg valore_non_valido
+    movb %bl, %al
+    subl $48, %eax
+    movb 1(%esi), %bl
+    cmpb $10, %bl
+    jne valore_non_valido
     ret
+
+valore_non_valido:
+    movl $-1,%eax
+    ret
+
+

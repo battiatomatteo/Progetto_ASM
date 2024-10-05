@@ -1,9 +1,0 @@
-1)aggiunta la scritta alla fine che mostra la penalità e quando finisce l'ultimo ordine
-
-2)sistemato il problema del return che non andava (era il fatto che all'inizio la chiamata ad edf era fatta con una jump e non con una call)
-
-3)di seguito al punto 2 ho di conseguenza permesso al programma di andare in esecuzione più volte senza resettare
-
-4)ho spostato la parte di lettura del file all'inizio per sistemare un bug per cui puoi aprire il file solo una volta e così ho ridotto di qualche riga il codice
-
-5) ho modificato la funzione scanf per sistemare il problema che a volte anche se non mettevi il numero giusto partiva lo stesso l'edf (mi è sembrato che lo abbia fatto una volta dopo la modifica ma non ne sono mentre negli altri casi funziona e invece di far partire gli algoritmi mostra una scritta che dice di reinserire)

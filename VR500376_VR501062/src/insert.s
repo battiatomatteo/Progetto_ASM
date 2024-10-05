@@ -19,7 +19,6 @@ insert:
 	
 	movl  $0, %ecx
 
-
 	jmp start
 
 start:
