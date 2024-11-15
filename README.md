@@ -1,6 +1,6 @@
 # Progetto_ASM
 
--Il fine di questo progetto è quello di calcolare l'ordine di produzione di non più di dieci 
+- Il fine di questo progetto è quello di calcolare l'ordine di produzione di non più di dieci 
 ordini, con eventuali penalità dovute a dei ritardi nei tempi. Gli ordini, salvati in un file di 
 testo, vengono prelevati ed ordinati in base ad una scelta fatta dall’utente: la prima scelta 
 consiste nell’inserire 1 dove di conseguenza vengono ordinati con l’algoritmo EDF 
