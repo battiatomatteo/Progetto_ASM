@@ -9,3 +9,5 @@ scadenza, si considera la priorità maggiore), la seconda scelta consiste nell�
 dove di conseguenza vengono ordinati con l’algoritmo HPF (High Priority First) cioè ordina 
 secondo priorità maggiore (in caso di parità di priorità si ordina per scadenza) ed in fine si 
 ha una terza scelta cioè se si desidera chiudere il programma si inserisce 0.
+
+- Creare la cartella bin e obj vuote.
