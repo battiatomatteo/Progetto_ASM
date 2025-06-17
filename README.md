@@ -1,13 +1,25 @@
 # Progetto_ASM
 
-- Il fine di questo progetto è quello di calcolare l'ordine di produzione di non più di dieci 
-ordini, con eventuali penalità dovute a dei ritardi nei tempi. Gli ordini, salvati in un file di 
-testo, vengono prelevati ed ordinati in base ad una scelta fatta dall’utente: la prima scelta 
-consiste nell’inserire 1 dove di conseguenza vengono ordinati con l’algoritmo EDF 
-(Earliest Deadline First) cioè ordina secondo scadenza più vicina (in caso di parità di 
-scadenza, si considera la priorità maggiore), la seconda scelta consiste nell’inserire 2 
-dove di conseguenza vengono ordinati con l’algoritmo HPF (High Priority First) cioè ordina 
-secondo priorità maggiore (in caso di parità di priorità si ordina per scadenza) ed in fine si 
-ha una terza scelta cioè se si desidera chiudere il programma si inserisce 0.
+## 📌 Descrizione
+Questo progetto in **Assembly** ha lo scopo di calcolare l'ordine di produzione di massimo **dieci ordini**, tenendo conto di eventuali penalità per ritardi nei tempi.  
+Gli ordini vengono letti da un file di testo e ordinati secondo la scelta dell'utente:
 
-- Creare la cartella bin e obj vuote.
+1️⃣ **EDF (Earliest Deadline First)** - Ordina per **scadenza più vicina** (in caso di parità, si considera la priorità maggiore).  
+2️⃣ **HPF (High Priority First)** - Ordina per **priorità maggiore** (in caso di parità, si ordina per scadenza).  
+0️⃣ **Chiudi il programma**.
+
+## 📂 Struttura della Repository
+Per garantire un'organizzazione chiara, si consiglia di creare le seguenti cartelle **vuote** prima dell'esecuzione:
+
+- `bin` → Per i file eseguibili.
+- `obj` → Per gli oggetti compilati.
+
+## 🔧 Linguaggi Utilizzati
+- **Assembly** - Linguaggio principale del progetto.
+
+## 💻 Esecuzione
+Il programma legge il file di testo contenente gli ordini, li ordina secondo la modalità scelta dall'utente e restituisce la lista ordinata con eventuali penalità applicate ai ritardi.
+
+---
+
+Se vuoi aggiungere altri dettagli o modificarlo, fammi sapere! 😊
