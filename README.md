@@ -19,7 +19,3 @@ Per garantire un'organizzazione chiara, si consiglia di creare le seguenti carte
 
 ## 💻 Esecuzione
 Il programma legge il file di testo contenente gli ordini, li ordina secondo la modalità scelta dall'utente e restituisce la lista ordinata con eventuali penalità applicate ai ritardi.
-
----
-
-Se vuoi aggiungere altri dettagli o modificarlo, fammi sapere! 😊
